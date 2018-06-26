@@ -69,7 +69,9 @@ void KalmanFilter::UpdateEKF(const VectorXd &z, Tools &tools) {
     cout << "ERROR: normalization of the angle did not work properly" << endl;
   }
   z_pred << rho, theta, rho_dot;
-  VectorXd y = z - z_pred;
+  VectorXd err = z - z_pred;
+  VectorXd y(3);
+  y << err[0],tools.Normalize(err[1]),err[2];
 //use jacobian to calculate update
 
   //MatrixXd H_j = H_;
